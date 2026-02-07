@@ -1,0 +1,103 @@
+/*   header contaner  */
+
+.header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 70px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+}
+
+/* the app logoo */
+.logo {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+}
+
+/* the navigation wrapper  */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+/*  DEFAULT LINKS  */
+.nav a {
+  text-decoration: none;
+  color: #374151;
+  font-size: 15px;
+  font-weight: 500;
+  position: relative;
+  transition: all 0.25s ease;
+}
+
+/* Hover animation */
+.nav a:hover {
+  color: #4f46e5;
+  transform: translateY(-2px);
+}
+
+/* Underline slide effect */
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0%;
+  height: 2px;
+  background: #4f46e5;
+  transition: width 0.25s ease;
+}
+
+.nav a:hover::after {
+  width: 100%;
+}
+
+/* the sign in button */
+
+.signin {
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: #4f46e5;
+  color: #ffffff !important;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.signin:hover {
+  background: #4338ca;
+  transform: translateY(-1px);
+}
+
+/* the sign out button */
+
+.signout {
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: #ef4444;
+  color: #ffffff !important;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.signout:hover {
+  background: #dc2626;
+  transform: translateY(-1px);
+}
+
+/* ative page highlight */
+
+.nav a.active {
+  color: #4f46e5;
+  font-weight: 600;
+}
