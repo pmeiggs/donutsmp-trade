@@ -10,7 +10,7 @@ const app = express();
 const serviceAccount = require("./cred.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://python5-8bb0d-default-rtdb.firebaseio.com/"
+  databaseURL: ""
 });
 
 const db = admin.database();
