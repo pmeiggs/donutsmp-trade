@@ -54,3 +54,34 @@
   font-size: 0.85rem;
   margin-top: 5px;
 }
+.login-page {
+  /* This centers everything perfectly in the middle of the screen */
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  /* We keep the background transparent so the App.jsx green shows through */
+  background: transparent; 
+}
+
+.login-card {
+  /* Switched to a dark grey with 85% opacity */
+  background: rgba(45, 45, 45, 0.85); 
+  backdrop-filter: blur(15px); /* Keeps that fancy frosted look */
+  border-radius: 12px;
+  /* Darker border to match the grey theme */
+  border: 1px solid rgba(255, 255, 255, 0.1); 
+  padding: 40px;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  color: white; /* Make sure text is white so it shows up on grey */
+}
+
+.login-title {
+  font-weight: 800;
+  color: #41cd70; /* Using your Emerald Green for the title */
+  margin-bottom: 1.5rem;
+  text-align: center;
+}

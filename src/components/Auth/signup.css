@@ -1,69 +1,81 @@
 .signup-wrapper {
+  background: url('https://wallpaperaccess.com/full/1283626.jpg') no-repeat center center fixed; /* Optional: Minecraft landscape */
   background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
   min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .signup-card {
-  max-width: 600px;
+  max-width: 500px;
   width: 90%;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(15px);
-  border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  /* Darker glass effect for a gaming feel */
+  background: rgba(20, 20, 20, 0.8); 
+  backdrop-filter: blur(20px);
+  border-radius: 12px; /* Sharper edges look more 'blocky' but modern */
+  border: 2px solid rgba(65, 205, 112, 0.3); /* Emerald Green glow border */
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
   overflow: hidden;
-  margin: 40px 0;
-}
-
-.logo-container {
-  padding: 30px 0 10px 0;
-  display: flex;
-  justify-content: center;
-}
-
-.signup-logo {
-  max-height: 120px;
-  width: auto;
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+  padding: 40px;
+  color: white;
 }
 
 .signup-header {
-  font-size: 2rem;
-  font-weight: 800;
-  color: #2d3436;
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #41cd70; /* Emerald Green */
   margin-bottom: 1.5rem;
   text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 .custom-input {
-  border-radius: 12px;
-  padding: 10px 15px;
-  border: 1.5px solid #dee2e6;
-  background: rgba(255, 255, 255, 0.9);
+  width: 100%;
+  border-radius: 4px; /* Minecraft buttons are rectangular */
+  padding: 12px 15px;
+  border: 2px solid #3d3d3d;
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
   transition: all 0.3s ease;
+  margin-bottom: 5px;
 }
 
 .custom-input:focus {
-  border-color: #0d6efd;
-  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+  outline: none;
+  border-color: #41cd70;
+  background: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 10px rgba(65, 205, 112, 0.2);
 }
 
 .btn-confirm {
-  border-radius: 12px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  background: linear-gradient(45deg, #0d6efd, #0b5ed7);
+  width: 100%;
+  padding: 15px;
+  border-radius: 4px;
+  font-weight: 800;
+  text-transform: uppercase;
+  /* Donut SMP style gradient */
+  background: linear-gradient(135deg, #41cd70 0%, #2e8b57 100%);
   border: none;
-  transition: transform 0.2s;
+  color: white;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: transform 0.2s, filter 0.2s;
 }
 
 .btn-confirm:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+  transform: scale(1.02);
+  filter: brightness(1.1);
 }
 
-.text-danger.small {
-  min-height: 1.25rem;
-  margin-top: 4px;
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.signup-logo {
+  max-height: 80px;
+  filter: drop-shadow(0 0 10px rgba(65, 205, 112, 0.5));
 }
