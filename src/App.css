@@ -1,10 +1,10 @@
 /* 1. RESET & VARIABLES */
 :root {
-  --mc-grass: #39C5BB;       /* The World Background */
+  --mc-grass: #361b4e;       /* The World Background */
   --mc-dirt: #3b2818;        /* Dark Brown */
   --mc-stone: #1E1E1E;       /* Card Background */
   --mc-emerald: #41cd70;     /* Accents */
-  --mc-diamond: #4FA1D8;     /* Buttons */
+  --mc-diamond: #12486b;     /* Buttons */
   --text-main: #ffffff;
   --text-muted: #aaaaaa;
 }
