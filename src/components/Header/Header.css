@@ -1,44 +1,125 @@
-.navbar {
-  background-color: #1a1a1a !important; 
+/* =========================================
+   DONUT SMP HEADER 
+   ========================================= */
+
+/* 1. The Main Bar - Now Dark & Glassy */
+.header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 70px;
+  background: rgba(20, 20, 20, 0.95); /* Dark Grey */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Stronger shadow */
+  border-bottom: 1px solid #333;
+  z-index: 1000;
+  backdrop-filter: blur(10px); /* Blurs the game behind it */
+}
+
+/* 2. The Logo */
+.logo {
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffffff; /* White Text */
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-family: 'Minecraft', sans-serif; /* If you have a font */
+}
+
+/* 3. Navigation Links */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #bbbbbb; /* Light Grey */
+  font-size: 15px;
+  font-weight: 500;
+  position: relative;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+/* Hover Effect - Now Green! */
+.nav a:hover {
+  color: #41cd70; /* Minecraft Emerald */
+  transform: translateY(-2px);
+  text-shadow: 0 0 8px rgba(65, 205, 112, 0.4);
+}
+
+.nav a.active {
+  color: #41cd70;
+  font-weight: 700;
+}
+
+/* The sliding underline animation */
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0%;
+  height: 2px;
+  background: #41cd70; /* Green Line */
+  transition: width 0.25s ease;
+}
+
+.nav a:hover::after {
+  width: 100%;
+}
+
+/* 4. Search Bar - Dark Glass Style */
+.search-input {
+  background: rgba(255, 255, 255, 0.05); /* Very subtle see-through */
+  border: 1px solid #444;
+  color: white !important;
+  border-radius: 8px;
+  padding: 8px 12px;
   transition: all 0.3s ease;
 }
 
-.search-input {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white !important;
-  border-radius: 8px 0 0 8px;
-}
-
 .search-input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+  color: #666;
 }
 
 .search-input:focus {
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: none;
-  border-color: #0d6efd;
+  background: rgba(0, 0, 0, 0.5);
+  border-color: #41cd70; /* Green Glow when typing */
+  outline: none;
+  box-shadow: 0 0 10px rgba(65, 205, 112, 0.2);
 }
 
+/* 5. User Profile Button */
 .btn-user-profile {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid #333;
   color: white;
   border-radius: 50px;
   padding: 5px 15px 5px 5px;
   transition: background 0.2s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .btn-user-profile:hover {
-  background: rgba(255, 255, 255, 0.15);
-  color: white;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #41cd70;
 }
 
 .avatar-circle {
   width: 32px;
   height: 32px;
-  background-color: #0d6efd;
-  color: white;
+  background-color: #41cd70; /* Green Circle */
+  color: #000; /* Black text inside green looks like XP orb */
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -47,114 +128,35 @@
   font-size: 0.9rem;
 }
 
-.dropdown-menu {
-  border-radius: 12px;
-  animation: slideIn 0.2s ease-out;
-}
-
-@keyframes slideIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}/*   header contaner  */
-
-.header {
-  position: sticky;
-  top: 0;
-  width: 100%;
-  height: 70px;
-  background: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 40px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-  z-index: 1000;
-  backdrop-filter: blur(8px);
-}
-
-/* the app logoo */
-.logo {
-  font-size: 22px;
-  font-weight: 700;
-  color: #111827;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-}
-
-/* the navigation wrapper  */
-.nav {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-}
-
-/*  DEFAULT LINKS  */
-.nav a {
-  text-decoration: none;
-  color: #374151;
-  font-size: 15px;
-  font-weight: 500;
-  position: relative;
-  transition: all 0.25s ease;
-}
-
-/* Hover animation */
-.nav a:hover {
-  color: #4f46e5;
-  transform: translateY(-2px);
-}
-
-/* Underline slide effect */
-.nav a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -6px;
-  width: 0%;
-  height: 2px;
-  background: #4f46e5;
-  transition: width 0.25s ease;
-}
-
-.nav a:hover::after {
-  width: 100%;
-}
-
-/* the sign in button */
-
+/* 6. Sign In / Sign Out Buttons */
 .signin {
-  padding: 8px 16px;
+  padding: 8px 20px;
   border-radius: 8px;
-  background: #4f46e5;
-  color: #ffffff !important;
-  font-weight: 600;
-  transition: all 0.25s ease;
+  background: #41cd70; /* Green */
+  color: #000 !important;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .signin:hover {
-  background: #4338ca;
-  transform: translateY(-1px);
+  background: #36aa5c;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(65, 205, 112, 0.3);
 }
 
-/* the sign out button */
-
 .signout {
-  padding: 8px 16px;
+  background: transparent;
+  color: #ff5555; /* Minecraft Red */
+  border: 1px solid #ff5555;
+  padding: 6px 14px;
   border-radius: 8px;
-  background: #ef4444;
-  color: #ffffff !important;
+  cursor: pointer;
   font-weight: 600;
-  transition: all 0.25s ease;
+  transition: all 0.2s;
 }
 
 .signout:hover {
-  background: #dc2626;
-  transform: translateY(-1px);
-}
-
-/* ative page highlight */
-
-.nav a.active {
-  color: #4f46e5;
-  font-weight: 600;
+  background: rgba(255, 85, 85, 0.1);
 }

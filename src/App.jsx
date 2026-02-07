@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createClient } from '@supabase/supabase-js';
+import './components/Header/header.css'; 
 import './App.css';
 
 // ---------------------------------------------------------
-// 🚨 YOUR KEYS ARE SAVED HERE 🚨
+// 🚨 YOUR KEYS
 // ---------------------------------------------------------
 const supabaseUrl = 'https://krnakpqmaxznnsrohxrg.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtybmFrcHFtYXh6bm5zcm9oeHJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA0NzQ5MTMsImV4cCI6MjA4NjA1MDkxM30.77yKfEwqe8x_nJu0PWLzv0zcdczNyybFraI3e7dqxlc';
@@ -20,6 +21,8 @@ function App() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [formData, setFormData] = useState({ name: '', price: '', image: '' });
+  const [loginForm, setLoginForm] = useState({ username: '', password: '' });
+  
   const chatBottomRef = useRef(null);
 
   // --- 1. FETCH MARKET ITEMS ---
@@ -46,18 +49,12 @@ function App() {
   useEffect(() => {
     if (!activeChat) return;
 
-    // Load old messages
     async function getMessages() {
-      const { data } = await supabase
-        .from('messages')
-        .select('*')
-        .eq('auction_id', activeChat.id)
-        .order('created_at', { ascending: true });
+      const { data } = await supabase.from('messages').select('*').eq('auction_id', activeChat.id).order('created_at', { ascending: true });
       if (data) setMessages(data);
     }
     getMessages();
 
-    // Listen for new messages
     const chatSubscription = supabase
       .channel(`chat:${activeChat.id}`)
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: `auction_id=eq.${activeChat.id}` }, (payload) => {
@@ -68,12 +65,20 @@ function App() {
     return () => { supabase.removeChannel(chatSubscription); };
   }, [activeChat]);
 
-  // Auto-scroll chat
   useEffect(() => {
     chatBottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   // --- 3. ACTIONS ---
+  const handleLoginSubmit = () => {
+    if (!loginForm.username || !loginForm.password) {
+      alert("Please enter both Username and Password!");
+      return;
+    }
+    setUser({ name: loginForm.username });
+    setView('market');
+  };
+
   const handleAddItem = async () => {
     if (!user) return alert("You must be logged in!");
     const { error } = await supabase.from('auctions').insert([{
@@ -98,33 +103,50 @@ function App() {
 
   const handleCompleteTrade = async () => {
     await supabase.from('auctions').update({ status: 'Sold' }).eq('id', activeChat.id);
-    alert(`Trade Confirmed!`);
+    alert(`Trade Confirmed! Item marked as SOLD.`);
     fetchAuctions();
     setView('market');
   };
 
-  // --- 4. RENDER (Using direct JSX to fix focus bug) ---
+  // --- 4. NAVBAR ---
+  const Navbar = () => (
+    <nav className="header">
+      <div className="logo" onClick={() => setView('market')}>
+        <img src="/logo.png" style={{height:'40px', marginRight:'10px', verticalAlign:'middle'}} />
+        DONUT<span style={{color: '#41cd70'}}>SMP</span>
+      </div>
+
+      <div style={{flex: 1, maxWidth: '500px', margin: '0 20px'}}>
+        <input type="text" className="search-input" placeholder="Search items..." style={{width: '100%'}} />
+      </div>
+
+      <div className="nav">
+        <a onClick={() => setView('market')} className={view === 'market' ? 'active' : ''}>Market</a>
+        <a onClick={() => alert("Coming Soon!")}>Auctions</a>
+        
+        {user ? (
+          <div style={{display: 'flex', alignItems: 'center', gap: '15px'}}>
+            <button className="btn-user-profile" onClick={() => setView('profile')}>
+              <div className="avatar-circle">{user.name.charAt(0).toUpperCase()}</div>
+              <span style={{fontWeight:'600'}}>{user.name}</span>
+            </button>
+            <button className="signout" onClick={() => { setUser(null); setView('market'); }}>Sign Out</button>
+          </div>
+        ) : (
+          <button className="signin" onClick={() => setView('login')}>Sign In / Sign Up</button>
+        )}
+      </div>
+    </nav>
+  );
+
+  // --- 5. MAIN RENDER ---
   return (
     <div className="app-container">
-      
-      {/* NAVBAR */}
-      <nav className="navbar">
-        <div className="nav-brand" onClick={() => setView('market')}>
-          DONUT<span style={{color: 'var(--mc-emerald)'}}>SMP</span>
-        </div>
-        <div className="nav-links">
-          <button onClick={() => setView('market')}>Browse</button>
-          {user ? (
-            <button onClick={() => setView('profile')} style={{color: 'var(--mc-diamond)'}}>👤 {user.name}</button>
-          ) : (
-            <button onClick={() => setView('login')} className="btn-primary" style={{width: 'auto', padding: '5px 15px'}}>Login</button>
-          )}
-        </div>
-      </nav>
+      <Navbar />
 
       <main className="main-content">
         
-        {/* VIEW: MARKET */}
+        {/* VIEW: MARKET (Includes Self-Trade Block) */}
         {view === 'market' && (
           <div className="market-grid">
             {items.map(item => (
@@ -134,14 +156,19 @@ function App() {
                   <h3>{item.name}</h3>
                   <p style={{color: '#888', fontSize: '0.9rem'}}>Seller: {item.seller}</p>
                   <span className="price-tag">${item.price}</span>
+                  
                   {item.status === 'Active' ? (
-                    <button className="btn-primary" style={{marginTop: '15px'}} onClick={() => {
-                        if(!user) setView('login');
-                        else { setActiveChat(item); setView('chat'); }
-                      }}>Buy Now</button>
-                  ) : (
-                    <button className="btn-primary" disabled style={{marginTop: '15px', background: '#444', borderColor: '#222', color: '#888'}}>SOLD</button>
-                  )}
+                    user?.name === item.seller ? (
+                      <button className="btn-primary" disabled style={{marginTop: '15px', background: '#555', cursor: 'not-allowed', borderColor: '#444'}}>
+                        Your Listing
+                      </button>
+                    ) : (
+                      <button className="btn-primary" style={{marginTop: '15px'}} onClick={() => {
+                          if(!user) setView('login');
+                          else { setActiveChat(item); setView('chat'); }
+                        }}>Buy Now</button>
+                    )
+                  ) : <button className="btn-primary" disabled style={{marginTop: '15px', background: '#333', borderColor: '#222', color: '#888'}}>SOLD</button>}
                 </div>
               </div>
             ))}
@@ -153,16 +180,14 @@ function App() {
           <div className="login-overlay">
             <div className="login-box">
               <h2 style={{color: 'var(--mc-emerald)', marginBottom: '20px'}}>PLAYER LOGIN</h2>
-              <input type="text" placeholder="Minecraft Username" className="input-field" onChange={(e) => setUser({name: e.target.value})} />
-              <button className="btn-primary" onClick={() => { 
-                 if(!user) setUser({name: 'Player1'}); 
-                 setView('market'); 
-              }}>Enter Server</button>
+              <input type="text" placeholder="Minecraft Username" className="input-field" onChange={(e) => setLoginForm({...loginForm, username: e.target.value})} />
+              <input type="password" placeholder="Password" className="input-field" onChange={(e) => setLoginForm({...loginForm, password: e.target.value})} />
+              <button className="btn-primary" onClick={handleLoginSubmit}>Enter Server</button>
             </div>
           </div>
         )}
 
-        {/* VIEW: PROFILE (SELL) */}
+        {/* VIEW: PROFILE */}
         {view === 'profile' && (
           <div style={{background: 'rgba(0,0,0,0.8)', padding: '2rem', borderRadius: '12px', maxWidth: '600px', margin: '0 auto'}}>
             <h2 style={{borderBottom: '2px solid #444', paddingBottom: '10px'}}>List an Item</h2>
@@ -178,7 +203,6 @@ function App() {
         {/* VIEW: CHAT */}
         {view === 'chat' && activeChat && (
           <div className="chat-container" style={{maxWidth: '900px', margin: '0 auto', background: 'rgba(0,0,0,0.85)', padding: '20px', borderRadius: '12px', display: 'flex', gap: '20px', height: '500px'}}>
-            {/* Left Panel */}
             <div style={{flex: 1, borderRight: '1px solid #444', paddingRight: '20px', display:'flex', flexDirection:'column'}}>
               <h2 style={{color: 'white'}}>Trade Room</h2>
               <div className="item-card">
@@ -191,46 +215,25 @@ function App() {
               </div>
             </div>
 
-            {/* Right Panel (Chat) */}
             <div style={{flex: 2, display: 'flex', flexDirection: 'column'}}>
               <div style={{flex: 1, background: '#111', borderRadius: '8px', padding: '15px', overflowY: 'auto', marginBottom: '15px'}}>
                 {messages.map((msg, index) => (
-                  <div key={index} style={{
-                    marginBottom: '10px', 
-                    textAlign: msg.sender === user?.name ? 'right' : 'left'
-                  }}>
-                    <div style={{
-                      display: 'inline-block',
-                      padding: '8px 12px',
-                      borderRadius: '8px',
-                      background: msg.sender === user?.name ? '#41cd70' : '#333',
-                      color: msg.sender === user?.name ? '#000' : '#fff',
-                      fontWeight: '500'
-                    }}>
+                  <div key={index} style={{textAlign: msg.sender === user?.name ? 'right' : 'left', marginBottom: '10px'}}>
+                    <span style={{background: msg.sender === user?.name ? '#41cd70' : '#333', color: msg.sender === user?.name ? '#000' : '#fff', padding:'8px 12px', borderRadius:'8px', display:'inline-block'}}>
                       {msg.text}
-                    </div>
+                    </span>
+                    <div style={{fontSize: '0.7rem', color: '#555', marginTop: '2px'}}>{msg.sender}</div>
                   </div>
                 ))}
                 <div ref={chatBottomRef} />
               </div>
-
               <div style={{display: 'flex', gap: '10px'}}>
-                <input 
-                  type="text" 
-                  placeholder="Type a message..." 
-                  className="input-field" 
-                  style={{marginBottom: 0}}
-                  value={newMessage}
-                  autoFocus
-                  onChange={(e) => setNewMessage(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
-                />
-                <button className="btn-primary" style={{width: '100px'}} onClick={handleSendMessage}>Send</button>
+                <input className="input-field" placeholder="Type a message..." style={{marginBottom: 0}} value={newMessage} autoFocus onChange={(e) => setNewMessage(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()} />
+                <button className="btn-primary" onClick={handleSendMessage} style={{width:'100px'}}>Send</button>
               </div>
             </div>
           </div>
         )}
-
       </main>
     </div>
   );
