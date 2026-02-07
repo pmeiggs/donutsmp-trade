@@ -1,10 +1,8 @@
-/* 導覽列整體背景 */
 .navbar {
-  background-color: #1a1a1a !important; /* 更深邃的黑色 */
+  background-color: #1a1a1a !important; 
   transition: all 0.3s ease;
 }
 
-/* 搜尋框樣式 */
 .search-input {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -22,7 +20,6 @@
   border-color: #0d6efd;
 }
 
-/* 使用者頭像按鈕 */
 .btn-user-profile {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -50,7 +47,6 @@
   font-size: 0.9rem;
 }
 
-/* 下拉選單動畫 */
 .dropdown-menu {
   border-radius: 12px;
   animation: slideIn 0.2s ease-out;
