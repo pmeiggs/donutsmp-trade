@@ -1,0 +1,105 @@
+.marketplace-container {
+  padding: 20px;
+}
+
+.search-section {
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.mc-input {
+  width: 100%;
+  max-width: 600px;
+  padding: 15px;
+  background: #1e1e1e;
+  border: 4px solid #7a7a7a;
+  color: white;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+.trade-card {
+  background: #2a2a2a;
+  border: 4px solid #7a7a7a;
+  padding: 15px;
+  position: relative;
+  transition: transform 0.2s;
+}
+
+.trade-card:hover {
+  transform: translateY(-5px);
+  border-color: #41cd70;
+}
+
+/* Rarity Borders */
+.trade-card.legendary { border-color: #ffaa00; }
+.trade-card.epic { border-color: #b000b0; }
+
+.item-preview {
+  height: 120px;
+  background: #121212;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.item-qty {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background: #333;
+  padding: 2px 8px;
+  font-size: 0.8rem;
+}
+
+.item-name {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.user-badge {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #aaa;
+  margin-bottom: 15px;
+}
+
+.price-box {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.price-value {
+  color: #41cd70;
+  font-weight: bold;
+}
+
+.mc-button {
+  width: 100%;
+  background: #5aa35a;
+  border: none;
+  border-bottom: 4px solid #3e703e;
+  color: white;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.mc-button:active {
+  border-bottom: 0;
+  transform: translateY(4px);
+}
