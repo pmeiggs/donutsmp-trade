@@ -1,4 +1,8 @@
 /* 1. RESET & VARIABLES */
+* {
+  box-sizing: border-box;
+}
+
 :root {
   --mc-grass: #361b4e;       /* The World Background */
   --mc-dirt: #3b2818;        /* Dark Brown */
@@ -16,6 +20,7 @@ body, html {
   background-color: var(--mc-grass);
   color: var(--text-main);
   height: 100%;
+  overflow-x:hidden;
 }
 
 /* 2. LAYOUT UTILITIES */

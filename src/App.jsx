@@ -4,7 +4,7 @@ import './components/Header/header.css';
 import './App.css';
 
 // ---------------------------------------------------------
-// 🚨 YOUR KEYS
+// keys for db
 // ---------------------------------------------------------
 const supabaseUrl = 'https://krnakpqmaxznnsrohxrg.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtybmFrcHFtYXh6bm5zcm9oeHJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA0NzQ5MTMsImV4cCI6MjA4NjA1MDkxM30.77yKfEwqe8x_nJu0PWLzv0zcdczNyybFraI3e7dqxlc';
