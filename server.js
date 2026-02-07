@@ -1,0 +1,114 @@
+const express = require('express');
+const admin = require('firebase-admin');
+const session = require('express-session');
+const crypto = require('crypto');
+const path = require('path');
+
+const app = express();
+
+// 1. Firebase Initialization
+const serviceAccount = require("./cred.json");
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://python5-8bb0d-default-rtdb.firebaseio.com/"
+});
+
+const db = admin.database();
+const userRef = db.ref("/user");
+const postRef = db.ref("/post");
+
+// 2. Middleware
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); // For React JSON requests
+app.use(session({
+  secret: crypto.randomBytes(24).toString('hex'),
+  resave: false,
+  saveUninitialized: true
+}));
+
+// 3. Routes - Signup Logic (accidentify)
+app.post('/accidentify', async (req, res) => {
+    const { username, password, confirmpass, gender, age } = req.body;
+
+    try {
+        const snapshot = await userRef.get();
+        const users = snapshot.val() || {};
+
+        // Validation logic
+        if (users[username]) {
+            return res.status(400).json({ sameuserid: 'The username already exists' });
+        }
+        if (password.length < 7 || password.length > 15) {
+            return res.status(400).json({ warnpass: 'Password must be 7-15 characters' });
+        }
+        if (password !== confirmpass) {
+            return res.status(400).json({ notsamepass: 'Passwords do not match' });
+        }
+
+        // Set User
+        await userRef.child(username).set({
+            password: password,
+            gender: gender,
+            age: age
+        });
+
+        res.status(200).send("Signup successful");
+    } catch (error) {
+        res.status(500).send("Database Error");
+    }
+});
+
+// 4. Routes - Login Logic
+app.post('/Login', async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+        const snapshot = await userRef.child(username).get();
+        const userData = snapshot.val();
+
+        if (!userData) {
+            return res.status(404).json({ nouser: 'This username does not exist' });
+        }
+
+        if (userData.password === password) {
+            req.session.loginuser = username;
+            return res.status(200).json({ success: true, user: username });
+        } else {
+            return res.status(401).json({ wrongpass: 'Wrong password' });
+        }
+    } catch (error) {
+        res.status(500).send("Login Error");
+    }
+});
+
+// 5. Routes - Post Logic
+app.post('/post', async (req, res) => {
+    if (!req.session.loginuser) return res.status(403).send("Unauthorized");
+
+    const { title, photo, content } = req.body;
+    const date = new Date().toLocaleDateString();
+
+    try {
+        const snapshot = await postRef.get();
+        const posts = snapshot.val() || {};
+        
+        // Logic for ID generation (e.g., a1, a2...)
+        const keys = Object.keys(posts);
+        const lastKey = keys.length > 0 ? keys[keys.length - 1] : "a0";
+        const nextId = "a" + (parseInt(lastKey.substring(1)) + 1);
+
+        await postRef.child(nextId).set({
+            Title: title,
+            Datetime: date,
+            Writer: req.session.loginuser,
+            Photo: photo,
+            Content: content
+        });
+
+        res.redirect('/main');
+    } catch (error) {
+        res.status(500).send("Posting Error");
+    }
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));
