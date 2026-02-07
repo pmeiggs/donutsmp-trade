@@ -1,4 +1,61 @@
-/*   header contaner  */
+.navbar {
+  background-color: #1a1a1a !important; 
+  transition: all 0.3s ease;
+}
+
+.search-input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white !important;
+  border-radius: 8px 0 0 8px;
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.search-input:focus {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: none;
+  border-color: #0d6efd;
+}
+
+.btn-user-profile {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 50px;
+  padding: 5px 15px 5px 5px;
+  transition: background 0.2s;
+}
+
+.btn-user-profile:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+
+.avatar-circle {
+  width: 32px;
+  height: 32px;
+  background-color: #0d6efd;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.dropdown-menu {
+  border-radius: 12px;
+  animation: slideIn 0.2s ease-out;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}/*   header contaner  */
 
 .header {
   position: sticky;

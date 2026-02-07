@@ -10,7 +10,7 @@ const app = express();
 const serviceAccount = require("./cred.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://python5-8bb0d-default-rtdb.firebaseio.com/"
+  databaseURL: ""
 });
 
 const db = admin.database();
@@ -48,8 +48,6 @@ app.post('/accidentify', async (req, res) => {
         // Set User
         await userRef.child(username).set({
             password: password,
-            gender: gender,
-            age: age
         });
 
         res.status(200).send("Signup successful");
@@ -98,11 +96,11 @@ app.post('/post', async (req, res) => {
         const nextId = "a" + (parseInt(lastKey.substring(1)) + 1);
 
         await postRef.child(nextId).set({
-            Title: title,
+            Item: item,
             Datetime: date,
-            Writer: req.session.loginuser,
+            Poster: req.session.loginuser,
             Photo: photo,
-            Content: content
+            Price: content
         });
 
         res.redirect('/main');
