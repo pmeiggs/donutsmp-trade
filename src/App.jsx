@@ -1,5 +1,5 @@
-import Header from './components/Header';
-import Marketplace from './components/Marketplace';
+import Header from './components/Header/Header';
+import Marketplace from './components/Marketplace/Marketplace';
 
 function App() {
   return (
