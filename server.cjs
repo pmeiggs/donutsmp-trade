@@ -1,16 +1,40 @@
+import express from 'express';
+import admin from 'firebase-admin';
+import session from 'express-session';
+import crypto from 'crypto';
+import path from 'path';
+import cors from 'cors';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const express = require('express');
 const admin = require('firebase-admin');
 const session = require('express-session');
 const crypto = require('crypto');
 const path = require('path');
-
 const app = express();
 
+
+import { createClient } from '@supabase/supabase-js'
+const supabaseUrl = 'https://krnakpqmaxznnsrohxrg.supabase.co'
+const supabaseKey = process.env.SUPABASE_KEY
+const supabase = createClient(supabaseUrl, supabaseKey)
+
+const cors = require('cors');
+app.use(cors({
+  origin: "https://pmeiggs.github.io", // Specifically allow your GitHub Pages
+  credentials: true
+}));
+
 // 1. Firebase Initialization
-const serviceAccount = require("./cred.json");
+const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT 
+  ? JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT) 
+  : require("./cred.json"); // Falls back to local file for dev
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: ""
+  databaseURL: supabaseUrl // Paste your URL here
 });
 
 const db = admin.database();
@@ -83,30 +107,32 @@ app.post('/Login', async (req, res) => {
 app.post('/post', async (req, res) => {
     if (!req.session.loginuser) return res.status(403).send("Unauthorized");
 
-    const { title, photo, content } = req.body;
+    const { title, photo, content } = req.body; // Incoming data
     const date = new Date().toLocaleDateString();
 
     try {
         const snapshot = await postRef.get();
         const posts = snapshot.val() || {};
         
-        // Logic for ID generation (e.g., a1, a2...)
         const keys = Object.keys(posts);
         const lastKey = keys.length > 0 ? keys[keys.length - 1] : "a0";
         const nextId = "a" + (parseInt(lastKey.substring(1)) + 1);
 
         await postRef.child(nextId).set({
-            Item: item,
+            Item: title,    // Changed 'item' to 'title' to match your req.body
             Datetime: date,
             Poster: req.session.loginuser,
             Photo: photo,
             Price: content
         });
 
-        res.redirect('/main');
+        res.status(200).json({ success: true }); // Better for React than res.redirect
     } catch (error) {
         res.status(500).send("Posting Error");
     }
 });
 
-app.listen(3000, () => console.log('Server running on port 3000'));
+const PORT = process.env.PORT || 3000; 
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server is running on port ${PORT}`);
+});
