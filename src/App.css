@@ -38,7 +38,7 @@ body, html {
   flex-grow: 1;
 }
 
-/* 3. NAVBAR (MinionAH Style) */
+/* 3. NAVBAR  */
 .navbar {
   background: rgba(0, 0, 0, 0.85); /* Dark & Readable */
   border-bottom: 4px solid var(--mc-dirt);
