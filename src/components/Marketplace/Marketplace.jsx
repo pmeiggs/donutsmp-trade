@@ -1,10 +1,6 @@
 import React from 'react';
 
-const TRADES = [
-  { id: 1, item: "Enchanted Golden Apple", price: "250,000", seller: "Techno_Fan", rarity: "Legendary", type: "Food" },
-  { id: 2, item: "Netherite Chestplate", price: "1.2M", seller: "Dreamy", rarity: "Epic", type: "Armor" },
-  { id: 3, item: "Shulker Box (Blue)", price: "45,000", seller: "BoxMaster", rarity: "Rare", type: "Blocks" },
-];
+
 
 export default function Marketplace() {
   return (
