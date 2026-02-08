@@ -49,13 +49,13 @@
 
 /* Hover Effect - Now Green! */
 .nav a:hover {
-  color: #41cd70; /* Minecraft Emerald */
+  color: #05008e; /* Minecraft Emerald */
   transform: translateY(-2px);
-  text-shadow: 0 0 8px rgba(65, 205, 112, 0.4);
+  text-shadow: 0 0 8px rgba(15, 4, 88, 0.4);
 }
 
 .nav a.active {
-  color: #41cd70;
+  color: #04079f;
   font-weight: 700;
 }
 
@@ -67,7 +67,7 @@
   bottom: -6px;
   width: 0%;
   height: 2px;
-  background: #41cd70; /* Green Line */
+  background: #3c02b8; /* Green Line */
   transition: width 0.25s ease;
 }
 
@@ -91,9 +91,9 @@
 
 .search-input:focus {
   background: rgba(0, 0, 0, 0.5);
-  border-color: #41cd70; /* Green Glow when typing */
+  border-color: #140376; /* Green Glow when typing */
   outline: none;
-  box-shadow: 0 0 10px rgba(65, 205, 112, 0.2);
+  box-shadow: 0 0 10px rgba(1, 1, 70, 0.2);
 }
 
 /* 5. User Profile Button */
@@ -112,13 +112,13 @@
 
 .btn-user-profile:hover {
   background: rgba(255, 255, 255, 0.1);
-  border-color: #41cd70;
+  border-color: #0914b1;
 }
 
 .avatar-circle {
   width: 32px;
   height: 32px;
-  background-color: #41cd70; /* Green Circle */
+  background-color: #090cb1; /* Green Circle */
   color: #000; /* Black text inside green looks like XP orb */
   border-radius: 50%;
   display: flex;
@@ -132,7 +132,7 @@
 .signin {
   padding: 8px 20px;
   border-radius: 8px;
-  background: #41cd70; /* Green */
+  background: #1108c3; /* Green */
   color: #000 !important;
   font-weight: 700;
   border: none;
@@ -141,7 +141,7 @@
 }
 
 .signin:hover {
-  background: #36aa5c;
+  background: #071c93;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(65, 205, 112, 0.3);
 }

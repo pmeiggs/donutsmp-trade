@@ -1,10 +1,15 @@
 /* 1. RESET & VARIABLES */
+* {
+  box-sizing: border-box;
+}
+
 :root {
-  --mc-grass: #311369;       /* The World Background */
-  --mc-dirt: #3b2818;        /* Dark Brown */
-  --mc-stone: #1E1E1E;       /* Card Background */
-  --mc-emerald: #228a4a;     /* Accents */
-  --mc-diamond: #4491c4;     /* Buttons */
+  --mc-grass: #361b4e;
+  --mc-dirt: #3b2818;
+  --mc-stone: #1E1E1E;
+  /* Changed this from green to the Donut blue */
+  --mc-emerald: #12486b; 
+  --mc-diamond: #12486b;
   --text-main: #ffffff;
   --text-muted: #aaaaaa;
 }
@@ -13,11 +18,13 @@ body, html {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: var(--mc-grass);
+  /* Updated background to use your brand dark purple/blue instead of generic blue */
+  background-color: var(--mc-grass); 
   color: var(--text-main);
   height: 100%;
-  width: 100%;
+  overflow-x: hidden;
 }
+
 
 /* 2. LAYOUT UTILITIES */
 .app-container {
@@ -34,7 +41,7 @@ body, html {
   flex-grow: 1;
 }
 
-/* 3. NAVBAR (MinionAH Style) */
+/* 3. NAVBAR  */
 .navbar {
   background: rgba(0, 0, 0, 0.85); /* Dark & Readable */
   border-bottom: 4px solid var(--mc-dirt);
@@ -159,4 +166,23 @@ body, html {
   font-size: 1.2rem;
   display: block;
   margin-top: 10px;
+}
+/* Custom styling for the item dropdown */
+select.input-field {
+  appearance: none;
+  background-color: #2a2a2a;
+  color: white;
+  border: 1px solid #555;
+  padding: 12px;
+  width: 100%;
+  border-radius: 4px;
+  background-image: url("data:image/svg+xml;charset=UTF-16,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+}
+
+select.input-field option {
+  background: #1E1E1E;
+  color: white;
 }
