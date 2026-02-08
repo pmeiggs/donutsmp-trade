@@ -3,6 +3,12 @@ import { createClient } from '@supabase/supabase-js';
 import './components/Header/header.css'; 
 import './App.css';
 
+<<<<<<< HEAD
+=======
+// ---------------------------------------------------------
+// keys for db
+// ---------------------------------------------------------
+>>>>>>> 8afb7efab339313f17a32d7dc7813209b5467b7d
 const supabaseUrl = 'https://krnakpqmaxznnsrohxrg.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtybmFrcHFtYXh6bm5zcm9oeHJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA0NzQ5MTMsImV4cCI6MjA4NjA1MDkxM30.77yKfEwqe8x_nJu0PWLzv0zcdczNyybFraI3e7dqxlc';
 
