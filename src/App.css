@@ -3,7 +3,7 @@
   --mc-grass: #1324e1;       /* The World Background */
   --mc-dirt: #3b2818;        /* Dark Brown */
   --mc-stone: #1E1E1E;       /* Card Background */
-  --mc-emerald: #41cd70;     /* Accents */
+  --mc-emerald: blue;     /* Accents */
   --mc-diamond: #4FA1D8;     /* Buttons */
   --text-main: #ffffff;
   --text-muted: #aaaaaa;
@@ -13,7 +13,7 @@ body, html {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: var(--mc-grass);
+  background-color: blue;
   color: var(--text-main);
   height: 100%;
 }
