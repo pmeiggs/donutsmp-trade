@@ -6,11 +6,20 @@ const path = require('path');
 
 const app = express();
 
+const cors = require('cors');
+app.use(cors({
+  origin: "https://pmeiggs.github.io", // Specifically allow your GitHub Pages
+  credentials: true
+}));
+
 // 1. Firebase Initialization
-const serviceAccount = require("./cred.json");
+const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT 
+  ? JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT) 
+  : require("./cred.json"); // Falls back to local file for dev
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: ""
+  databaseURL: "YOUR_FIREBASE_REALTIME_DATABASE_URL_HERE" // Paste your URL here
 });
 
 const db = admin.database();
@@ -83,30 +92,30 @@ app.post('/Login', async (req, res) => {
 app.post('/post', async (req, res) => {
     if (!req.session.loginuser) return res.status(403).send("Unauthorized");
 
-    const { title, photo, content } = req.body;
+    const { title, photo, content } = req.body; // Incoming data
     const date = new Date().toLocaleDateString();
 
     try {
         const snapshot = await postRef.get();
         const posts = snapshot.val() || {};
         
-        // Logic for ID generation (e.g., a1, a2...)
         const keys = Object.keys(posts);
         const lastKey = keys.length > 0 ? keys[keys.length - 1] : "a0";
         const nextId = "a" + (parseInt(lastKey.substring(1)) + 1);
 
         await postRef.child(nextId).set({
-            Item: item,
+            Item: title,    // Changed 'item' to 'title' to match your req.body
             Datetime: date,
             Poster: req.session.loginuser,
             Photo: photo,
             Price: content
         });
 
-        res.redirect('/main');
+        res.status(200).json({ success: true }); // Better for React than res.redirect
     } catch (error) {
         res.status(500).send("Posting Error");
     }
 });
 
-app.listen(3000, () => console.log('Server running on port 3000'));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
