@@ -15,6 +15,12 @@ const crypto = require('crypto');
 const path = require('path');
 const app = express();
 
+
+import { createClient } from '@supabase/supabase-js'
+const supabaseUrl = 'https://krnakpqmaxznnsrohxrg.supabase.co'
+const supabaseKey = process.env.SUPABASE_KEY
+const supabase = createClient(supabaseUrl, supabaseKey)
+
 const cors = require('cors');
 app.use(cors({
   origin: "https://pmeiggs.github.io", // Specifically allow your GitHub Pages
@@ -28,7 +34,7 @@ const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "YOUR_FIREBASE_REALTIME_DATABASE_URL_HERE" // Paste your URL here
+  databaseURL: supabaseUrl // Paste your URL here
 });
 
 const db = admin.database();
