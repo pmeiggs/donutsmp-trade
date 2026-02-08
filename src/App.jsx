@@ -70,7 +70,7 @@ function App() {
   const chatBottomRef = useRef(null);
 
   const itemData = {
-    'Skeleton Spawner': 'https://minecraft.wiki/images/Monster_Spawner_JE4.png?64df6',
+    'Spawner': 'https://minecraft.wiki/images/Monster_Spawner_JE4.png?64df6',
     'Shard Booster Potion': 'https://minecraft.wiki/images/Potion_of_Swiftness_JE2_BE2.png'
   };
 
