@@ -1,9 +1,18 @@
+import express from 'express';
+import admin from 'firebase-admin';
+import session from 'express-session';
+import crypto from 'crypto';
+import path from 'path';
+import cors from 'cors';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const express = require('express');
 const admin = require('firebase-admin');
 const session = require('express-session');
 const crypto = require('crypto');
 const path = require('path');
-
 const app = express();
 
 const cors = require('cors');
@@ -117,5 +126,7 @@ app.post('/post', async (req, res) => {
     }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const PORT = process.env.PORT || 3000; 
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server is running on port ${PORT}`);
+});
