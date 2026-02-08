@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createClient } from '@supabase/supabase-js';
-import './components/Header/header.css'; 
+import './components/Header/Header.css'; 
 import './App.css';
 
 const supabaseUrl = 'https://krnakpqmaxznnsrohxrg.supabase.co';
