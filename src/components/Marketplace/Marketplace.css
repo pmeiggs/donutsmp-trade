@@ -36,7 +36,7 @@
 
 .trade-card:hover {
   transform: translateY(-5px);
-  border-color: #41cd70;
+  border-color: #4179cd;
 }
 
 /* Rarity Borders */
@@ -84,15 +84,15 @@
 }
 
 .price-value {
-  color: #41cd70;
+  color: #6d87db;
   font-weight: bold;
 }
 
 .mc-button {
   width: 100%;
-  background: #5aa35a;
+  background: #354168;
   border: none;
-  border-bottom: 4px solid #3e703e;
+  border-bottom: 4px solid #3e4b70;
   color: white;
   padding: 10px;
   font-weight: bold;
