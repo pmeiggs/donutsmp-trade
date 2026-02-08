@@ -21,7 +21,7 @@ const Dashboard = ({ items, user, setView, setActiveChat }) => {
 
       <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px'}}>
         <section style={{background: 'rgba(0,0,0,0.6)', padding: '20px', borderRadius: '12px', border: '1px solid #333'}}>
-          <h2 style={{color: '#41cd70', borderBottom: '1px solid #433', paddingBottom: '10px'}}>My Listings</h2>
+          <h2 style={{color: '#120786', borderBottom: '1px solid #433', paddingBottom: '10px'}}>My Listings</h2>
           <div style={{marginTop: '15px'}}>
             {myListings.length === 0 ? <p style={{color: '#666'}}>No listings yet.</p> : 
               myListings.map(item => (
@@ -30,7 +30,7 @@ const Dashboard = ({ items, user, setView, setActiveChat }) => {
                     <img src={item.image} style={{width:'24px'}} alt="" />
                     <span>{item.name}</span>
                   </div>
-                  <span style={{color: item.status === 'Active' ? '#41cd70' : '#ff5555', fontWeight:'bold'}}>{item.status}</span>
+                  <span style={{color: item.status === 'Active' ? '#27079b' : '#ff5555', fontWeight:'bold'}}>{item.status}</span>
                 </div>
               ))
             }
@@ -65,7 +65,17 @@ function App() {
   const [activeChat, setActiveChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const [formData, setFormData] = useState({ name: '', price: '', image: '' });
+  const [formData, setFormData] = useState({ 
+  name: 'Spawner', 
+  price: '', 
+  image: 'https://minecraft.wiki/images/Spawner_JE3_BE2.png' 
+});
+
+// Add this constant right below the state
+const itemData = {
+  'Spawner': 'https://minecraft.wiki/images/Spawner_JE3_BE2.png',
+  'Shard Booster Potion': 'https://minecraft.wiki/images/Potion_of_Swiftness_JE2_BE2.png'
+};
   const [loginForm, setLoginForm] = useState({ username: '', password: '' });
   const chatBottomRef = useRef(null);
 
@@ -136,9 +146,10 @@ function App() {
   const Navbar = () => (
     <nav className="header">
       <div className="logo" onClick={() => setView('market')}>
-        <img src="/logo.png" style={{height:'40px', marginRight:'10px', verticalAlign:'middle'}} alt="" />
-        DONUT<span style={{color: '#41cd70'}}>SMP</span>
-      </div>
+  <img src="/logo.png" style={{height:'40px', marginRight:'10px', verticalAlign:'middle'}} alt="" />
+  {/* Changed #41cd70 to #12486b */}
+  DONUT<span style={{color: '#12486b'}}>SMP</span>
+</div>
       <div style={{flex: 1, maxWidth: '500px', margin: '0 20px'}}>
         <input type="text" className="search-input" placeholder="Search items..." style={{width: '100%'}} />
       </div>
@@ -199,16 +210,42 @@ function App() {
         )}
 
         {view === 'profile' && (
-          <div style={{background: 'rgba(0,0,0,0.8)', padding: '2rem', borderRadius: '12px', maxWidth: '600px', margin: '0 auto'}}>
-            <h2>List an Item</h2>
-            <input className="input-field" placeholder="Item Name" onChange={e => setFormData({...formData, name: e.target.value})} />
-            <input className="input-field" placeholder="Price" onChange={e => setFormData({...formData, price: e.target.value})} />
-            <input className="input-field" placeholder="Image URL" onChange={e => setFormData({...formData, image: e.target.value})} />
-            <button className="btn-primary" onClick={handleAddItem}>Post Auction</button>
-            <button onClick={() => setView('dashboard')} style={{background:'none', border:'none', color:'#888', marginTop:'10px', cursor:'pointer'}}>Back to Dashboard</button>
-          </div>
-        )}
+  <div style={{background: 'rgba(0,0,0,0.85)', padding: '2rem', borderRadius: '12px', maxWidth: '600px', margin: '0 auto', border: '2px solid #12486b'}}>
+    <h2 style={{color: '#12486b', textAlign: 'center'}}>LIST AN ITEM</h2>
+    
+    <label style={{color: '#888', fontSize: '0.8rem', display: 'block', marginBottom: '5px'}}>ITEM TYPE</label>
+    <select 
+      className="input-field" 
+      value={formData.name}
+      style={{cursor: 'pointer', marginBottom: '15px'}}
+      onChange={e => setFormData({
+        ...formData, 
+        name: e.target.value, 
+        image: itemData[e.target.value]
+      })}
+    >
+      <option value="Spawner">Spawner</option>
+      <option value="Shard Booster Potion">Shard Booster Potion</option>
+    </select>
 
+    <label style={{color: '#888', fontSize: '0.8rem', display: 'block', marginBottom: '5px'}}>PRICE (TOKENS)</label>
+    <input 
+      type="number"
+      className="input-field" 
+      placeholder="Amount..." 
+      value={formData.price}
+      onChange={e => setFormData({...formData, price: e.target.value})} 
+    />
+
+    <div style={{textAlign: 'center', margin: '15px 0', padding: '10px', background: '#111', borderRadius: '8px'}}>
+       <img src={formData.image} alt="preview" style={{height: '50px'}} />
+       <p style={{fontSize: '0.7rem', color: '#666', margin: '5px 0 0'}}>Item Preview</p>
+    </div>
+
+    <button className="btn-primary" onClick={handleAddItem} style={{background: '#12486b'}}>Post Auction</button>
+    <button onClick={() => setView('dashboard')} style={{background:'none', border:'none', color:'#888', marginTop:'15px', cursor:'pointer', width: '100%'}}>Back to Dashboard</button>
+  </div>
+)}
         {view === 'chat' && activeChat && (
           <div className="chat-container" style={{maxWidth: '900px', margin: '0 auto', background: 'rgba(0,0,0,0.85)', padding: '20px', borderRadius: '12px', display: 'flex', gap: '20px', height: '500px'}}>
             <div style={{flex: 1, borderRight: '1px solid #444', paddingRight: '20px', display:'flex', flexDirection:'column'}}>
@@ -218,7 +255,7 @@ function App() {
               </div>
               <div style={{marginTop:'auto'}}>
                 {user?.name === activeChat.seller && (
-                  <button className="btn-primary" style={{background: '#41cd70', marginBottom: '10px'}} onClick={handleCompleteTrade}>✅ Confirm Trade</button>
+                  <button className="btn-primary" style={{background: '#100698', marginBottom: '10px'}} onClick={handleCompleteTrade}>✅ Confirm Trade</button>
                 )}
                 <button style={{background: 'transparent', border: '1px solid #555', color: '#888', width: '100%', padding: '10px', cursor: 'pointer'}} onClick={() => setView('market')}>Exit</button>
               </div>
@@ -228,7 +265,7 @@ function App() {
               {user?.name === activeChat.seller ? (
                 <div style={{flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', background: '#111', borderRadius: '8px', padding: '20px'}}>
                   <div style={{fontSize: '3rem', marginBottom: '20px'}}>📩</div>
-                  <h3 style={{color: '#41cd70'}}>Your Active Listing</h3>
+                  <h3 style={{color: '#0a169a'}}>Your Active Listing</h3>
                   <p style={{color: '#888'}}>Awaiting buyer inquiries. Messages will appear below.</p>
                   <div style={{width:'100%', marginTop:'20px', overflowY:'auto', background:'#000', borderRadius:'8px', padding:'10px'}}>
                      {messages.length === 0 ? <p style={{fontSize:'0.8rem', color:'#444'}}>No messages yet...</p> : 
@@ -247,7 +284,7 @@ function App() {
                       <div className="avatar-circle" style={{width: '24px', height: '24px', fontSize: '0.7rem'}}>
                         {activeChat.seller.charAt(0).toUpperCase()}
                       </div>
-                      <span style={{color: '#41cd70', fontWeight: 'bold'}}>Chat with {activeChat.seller}</span>
+                      <span style={{color: '#0b0b99', fontWeight: 'bold'}}>Chat with {activeChat.seller}</span>
                     </div>
                   </div>
 
@@ -257,7 +294,7 @@ function App() {
                         <div style={{fontSize: '0.65rem', color: '#666', marginBottom: '2px', textTransform: 'uppercase'}}>
                           {msg.sender === user?.name ? 'You' : msg.sender}
                         </div>
-                        <span style={{background: msg.sender === user?.name ? '#41cd70' : '#333', color: msg.sender === user?.name ? '#000' : '#fff', padding:'8px 12px', borderRadius:'8px', display:'inline-block', fontWeight:'500'}}>
+                        <span style={{background: msg.sender === user?.name ? '#3e31f2' : '#333', color: msg.sender === user?.name ? '#000' : '#fff', padding:'8px 12px', borderRadius:'8px', display:'inline-block', fontWeight:'500'}}>
                           {msg.text}
                         </span>
                       </div>
